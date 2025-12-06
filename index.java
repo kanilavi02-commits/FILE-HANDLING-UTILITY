@@ -1,0 +1,69 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FileOperations {
+
+    public static void main(String[] args) {
+        String filePath = "sample.txt";
+
+        // Write initial content
+        writeToFile(filePath, "Initial content added to the file.
+File Handling Utility Demonstration.");
+
+        // Read the file
+        readFromFile(filePath);
+
+        // Modify the file (append content)
+        modifyFile(filePath, "This is an appended modification line.");
+
+        // Read again after modification
+        readFromFile(filePath);
+    }
+
+    /**
+     * Writes new content to the given file (overwrites if exists)
+     */
+    public static void writeToFile(String filePath, String content) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(content);
+            System.out.println("
+File written successfully.
+");
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Reads and prints file content line by line
+     */
+    public static void readFromFile(String filePath) {
+        System.out.println("Reading file: " + filePath);
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            System.out.println();
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Appends new content to the file without removing existing data
+     */
+    public static void modifyFile(String filePath, String newContent) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            writer.write("
+" + newContent);
+            System.out.println("File modified successfully.
+");
+        } catch (IOException e) {
+            System.out.println("Error modifying file: " + e.getMessage());
+        }
+    }
+}
